@@ -9,9 +9,10 @@ exitShowSyntax() {
 
 showSyntax() {
   printf "Syntax:\n"
-  printf "$(basename $0) ( '?' | ( QGIT-SHORTCUT | GIT-COMMAND ) { GIT-OPTION } )\n"
+  printf "$(basename $0) ( '?' | ( ["] QGIT-SHORTCUT { SHORTCUT-ARGUMENTS } ["] | GIT-COMMAND ) { GIT-OPTION } )\n"
   printf "  - '?' lists all defined shortcuts \n"
   printf "  - QGIT-SHORTCUT is a defined shortcut\n"
+  printf "    - If SHORTCUT has no arguments, than \"\" is optional\n"
   printf "  - GIT-COMMAND is a Git command\n"
   printf "  - GIT-OPTIONs are those as defined for Git commands\n"
 }
@@ -32,6 +33,16 @@ check_q() {
   [ "$strTst" ] && echo "$strTst" || echo "'$1' nicht vorhanden"
 }
 
+exit_q-error() {
+  printf "\n"
+  printf "################################################################################\n"
+  printf "FEHLER:\n"
+  printf "$1\n"
+  printf "################################################################################\n"
+  printf "\n\n"
+  exit
+}
+
 q_log1() {
   echo "log --oneline"
 }
@@ -40,13 +51,31 @@ q_logn() {
   echo "log --name-status"
 }
 
+  # Clearly for testing ...
+q_add-branch() {
+  [ ! "$1" ] && exit_q-error "add-branch: kein BRANCHNAME angegeben"
+  echo "branch $1"
+
+}
+
+q_add-orphan() {
+  [ ! "$1" ] && exit_q-error "add-orphan: kein TITLE angegeben"
+  echo "hallo checkout --orphan ID $1"
+
+}
+
 [ ! "$1" ] && exitShowSyntax
 [ "$1" = "?" ] && show_qs $2 && exit
 declare qargs=()
+declare strCmdArgs
 declare strTst
 for arg in "$@"
   do
-    strTst="$("q_$arg" 2>/dev/null)"
+    echo "x: $arg"
+    strTst=${arg%% *}
+    [ "$strTst" != "$arg" ] && strCmdArgs="${arg#* }" || strTst=$arg
+    strTst="$("q_$strTst" "$strCmdArgs" 2>/dev/null)"
+    strCmdArgs=''
     if [ "$strTst" ]
       then
         qargs=( "${qargs[@]}" "$strTst" )
