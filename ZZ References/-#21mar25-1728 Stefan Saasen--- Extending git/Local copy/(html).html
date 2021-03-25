@@ -1,0 +1,118 @@
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+   - License, v. 2.0. If a copy of the MPL was not distributed with this file,
+   - You can obtain one at http://mozilla.org/MPL/2.0/. -->
+<!DOCTYPE html>
+<html platform="linux"><head>
+  <meta http-equiv="Content-Security-Policy" content="default-src chrome:; img-src data: *; media-src *; object-src 'none'">
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="viewport" content="width=device-width; user-scalable=0">
+  <link rel="stylesheet" href="chrome://global/skin/aboutReader.css" type="text/css">
+<link rel="stylesheet" href="chrome://global/skin/narrate.css"><title>Extending git | Atlassian Git Tutorial</title><link rel="shortcut icon" href="https://wac-cdn.atlassian.com/assets/img/favicons/gitguide/favicon.png"></head>
+
+<body class="light sans-serif loaded" style="--font-size:20px; --content-width:30em;">
+  <div class="top-anchor"></div>
+
+  <div id="toolbar" class="toolbar-container scrolled">
+    <div class="toolbar reader-toolbar">
+      <div class="reader-controls" articledir="ltr">
+        <button class="close-button button " aria-label="Leseansicht schließen"><span class="hover-label">Leseansicht schließen</span></button>
+        <ul class="dropdown style-dropdown">
+          <li>
+            <button class="dropdown-toggle button style-button" aria-label="Schrifteinstellungen"><span class="hover-label">Schrifteinstellungen</span></button>
+          </li>
+          <li class="dropdown-popup">
+            <div class="dropdown-arrow"></div>
+            <div class="font-type-buttons radiorow"><input id="radio-itemsans-serif-button" type="radio" class="radio-button" name="font-type" checked="checked"><label for="radio-itemsans-serif-button" class="sans-serif-button" checked="true">Sans-serif</label><input id="radio-itemserif-button" type="radio" class="radio-button" name="font-type"><label for="radio-itemserif-button" class="serif-button">Serif</label></div>
+            <div class="font-size-buttons buttonrow">
+              <button class="minus-button" title="Kleinere Schrift"></button>
+              <span class="font-size-value">5</span>
+              <button class="plus-button" title="Größere Schrift">
+            </button></div>
+            <div class="content-width-buttons buttonrow">
+               <button class="content-width-minus-button" title="Schmalerer Inhalt"></button>
+               <span class="content-width-value">3</span>
+               <button class="content-width-plus-button" title="Breiterer Inhalt">
+            </button></div>
+            <div class="line-height-buttons buttonrow">
+                <button class="line-height-minus-button" title="Kleinerer Zeilenabstand"></button>
+                <span class="line-height-value">4</span>
+                <button class="line-height-plus-button" title="Größerer Zeilenabstand">
+            </button></div>
+            <div class="color-scheme-buttons radiorow"><input id="radio-itemlight-button" type="radio" class="radio-button" name="color-scheme" checked="checked"><label for="radio-itemlight-button" class="light-button" checked="true" title="Helles Farbschema">Hell</label><input id="radio-itemdark-button" type="radio" class="radio-button" name="color-scheme"><label for="radio-itemdark-button" class="dark-button" title="Dunkles Farbschema">Dunkel</label><input id="radio-itemsepia-button" type="radio" class="radio-button" name="color-scheme"><label for="radio-itemsepia-button" class="sepia-button" title="Sepia-Farbschema">Sepia</label></div>
+          </li>
+        </ul>
+      <ul class="dropdown narrate-dropdown"><li><button class="dropdown-toggle button narrate-toggle" aria-label="Anhören" hidden=""><span class="hover-label">Anhören</span></button></li><li class="dropdown-popup"><div class="narrate-row narrate-control"><button class="narrate-skip-previous" disabled="disabled" title="Zurück"></button><button class="narrate-start-stop" title="Wiedergeben"></button><button class="narrate-skip-next" disabled="disabled" title="Vor"></button></div><div class="narrate-row narrate-rate"><input class="narrate-rate-input" value="0" step="5" max="100" min="-100" type="range" title="Geschwindigkeit"></div><div class="narrate-row narrate-voices"><div class="voiceselect voice-select"><button class="select-toggle" aria-controls="voice-options">
+      <span class="label">Stimme:</span> <span class="current-voice"></span>
+    </button>
+    <div class="options" id="voice-options" role="listbox"></div></div></div><div class="dropdown-arrow"></div></li></ul><button data-buttonid="pocket-button" class="button pocket-button" aria-label="In Pocket speichern" style="background-image: url(&quot;chrome://global/skin/reader/pocket.svg&quot;); background-size: 16px 16px;"><span class="hover-label">In Pocket speichern</span></button></div>
+    </div>
+  </div>
+
+  <div class="container" style="--line-height:1.6em;" dir="ltr">
+    <div class="header reader-header reader-show-element">
+      <a class="domain reader-domain" href="https://www.atlassian.com/git/articles/extending-git">atlassian.com</a>
+      <div class="domain-border"></div>
+      <h1 class="reader-title">Extending git | Atlassian Git Tutorial</h1>
+      <div class="credits reader-credits">Atlassian</div>
+      <div class="meta-data">
+        <div class="reader-estimated-time" dir="ltr">4-6 Minuten</div>
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="content">
+      <div class="moz-reader-content reader-show-element"><div id="readability-page-1" class="page"><div>
+<p><a href="https://www.atlassian.com/git/articles">Back to list</a></p><div>
+<p>While Mercurial has a well defined (albeit internal) <a href="https://www.mercurial-scm.org/wiki/MercurialApi" data-event="clicked" data-uuid="6ee09557-42" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">API</a> that can be used to write <a href="https://www.mercurial-scm.org/wiki/WritingExtensions" data-event="clicked" data-uuid="6ee09557-42" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">extensions</a> that extend the functionality of Mercurial, git's extension model follows the <a href="http://en.wikipedia.org/wiki/Unix_philosophy" data-event="clicked" data-uuid="6ee09557-42" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">Unix philosophy</a>
+ of composing small, simple programs to achieve a similar effect. What 
+that means is that git "extensions" can be written in any language and 
+by following a few simple rules it's still possible to add commands that
+ appear as if they were built-in.</p>
+<h2> Example: git activity
+</h2>
+<p>To see the activity on all the branches in a repository I've implemented a <code>git activity</code> command. <a href="https://bitbucket.org/ssaasen/git-pastiche/src/master/bin/git-activity" data-event="clicked" data-uuid="976396d4-6b" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">git activity</a> shows the latest commit on every branch, sorted by recency.</p>
+<p>It shows the following output when executed in the Rails repository:</p>
+<p><img src="(html)-Dateien/git-activity-rails-output.png" alt="Rails Output" moz-reader-center="true"></p><p>The
+ script is written in bash and fairly straightforward. We set up colours
+ and parse some command line options the scripts supports (e.g. to turn 
+off colors, to limit the output) and then run <a href="https://www.kernel.org/pub/software/scm/git/docs/git-for-each-ref.html" data-event="clicked" data-uuid="81d8d257-10" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket"><code>git for-each-ref</code></a> to output information about each ref.</p>
+<pre> <code>#!/bin/bash <span>set</span> -<span>e</span> GIT_OPTS=<span>""</span> OUTPUT_FILTER=<span>"cat"</span> # <span>no</span>-op commit_id_format=$(tput setaf 1) date_format=$(tput bold; tput setaf 4) author_format=$(tput setaf 2) ref_name_format=$(tput setaf 3) bold=$(tput bold) reset=$(tput sgr0) function usage() { echo <span>""</span> echo <span>"git activity"</span> echo <span>""</span> echo <span>" See 'man git-activity' for further information"</span> } # actually <span>parse</span> the options and <span>do</span> stuff <span>while</span> [[ <span>$1</span> = -?* ]]; <span>do</span> case <span>$1</span> <span>in</span> -<span>h</span>|--<span>help</span>) usage <span>exit</span> 0 ;; --fetch) echo <span>"Fetch updates"</span> git fetch -q ;; -c|--<span>count</span>) shift limit=<span>${1</span>-<span>"10"</span>} #OUTPUT_FILTER=<span>"tail -n ${limit}"</span> GIT_OPTS=<span>"--count=${limit}"</span> ;; --<span>no</span>-color|--<span>no</span>-color) commit_id_format=<span>""</span> date_format=<span>""</span> author_format=<span>""</span> ref_name_format=<span>""</span> bold=<span>""</span> reset=<span>""</span> ;; *) ;; esac shift done # <span>Use</span> newline <span>as</span> a field separator IFS=$(echo -<span>en</span> <span>"\n\b"</span>) # <span>Use</span> tac <span>if</span> available, otherwise tail with the possibly-not-always-available # -r flag (<span>for</span> reverse output) TAC=$(<span>which</span> tac || echo 'tail -r') <span>for</span> <span>line</span> <span>in</span> $(git <span>for</span>-each-ref <span>${GIT_OPTS}</span> refs/remotes --<span>format</span>=<span>"%(authordate:relative)|%(objectname:short)|%(authorname)|%(refname:short)|%(subject)"</span> --<span>sort</span>=<span>"-authordate"</span>); <span>do</span> fields=(`echo <span>$line</span> | tr <span>"|"</span> <span>"\n"</span>`) printf <span>"${date_format}%15s${reset} ${commit_id_format}%s${reset} - ${author_format}[%s]${reset} (${ref_name_format}%s${reset}): %s\n"</span> <span>${fields</span>[*]} done | eval <span>$TAC</span> # reverse <span>sort</span> the output to show the newest entry last</code></pre>
+<p>The important rules to follow to make this script available as a git sub-command are:</p>
+<ul> <li>It should be named <code>git-COMMANDNAME</code>, in this case it's called git-activity</li> <li>and it needs to be executable and available on the <code>$PATH</code> In my example the custom <code>git-activity</code> script is in the <code>/usr/local/bin</code> directory but it can be in any directory that is on the <code>$PATH</code>:</li> </ul>
+<pre><code>[5002] λ &gt;<span> type </span>git-activity git-activity is /usr/local/bin/git-activity [5002] λ &gt; git activity [<span>..</span>.]</code></pre>
+<h2> Providing a manual/help page
+</h2>
+<p>If the custom command has an accompanying man page, the git help 
+command will show the help information as well. E.g. the man page for 
+the activity command is located in <code>/usr/local/share/man/man1/git-activity.1</code> and can be show by either <code>man git-activity</code> or <code>git help activity</code>.</p>
+<p>The <code>manpath</code> command can be used to show the locations the system uses to locate man pages:</p>
+<pre><code>[<span>5003</span>] λ &gt; manpath <span>/Users/</span>ssaasen<span>/.opam/</span>system<span>/man:/</span>usr<span>/local/</span>share<span>/man:/</span>usr<span>/share/</span><span>man:</span>\ <span>/Users/</span>ssaasen<span>/.cabal/</span>share<span>/man:/</span>opt<span>/scala/</span>man</code></pre>
+<p>The output for <code>git help activity</code> is (using <a href="https://bitbucket.org/ssaasen/git-pastiche/src/master/man/git-activity.1" data-event="clicked" data-uuid="6e00e6e2-35" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket"></a><a href="https://bitbucket.org/ssaasen/git-pastiche/src/master/man/git-activity.1" data-event="clicked" data-uuid="6e00e6e2-35" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">https://bitbucket.org/ssaasen/git-pastiche/src/master/man/git-activity.1</a>):</p>
+<p><img src="(html)-Dateien/git-activity-man-page.png" alt="Git activity man page" moz-reader-center="true"></p><p><em>Bonus tip</em> Man pages can easily be generated from Markdown using <a href="http://johnmacfarlane.net/pandoc/" data-event="clicked" data-uuid="76a4e647-6f" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">Pandoc</a>:</p>
+<pre><code>[5010] λ &gt; pandoc -s -w man doc/git-activity.1.md -o ./distribution/man/git-activity.1 # Display the man<span> page </span><span>for</span> testing [5011] λ &gt; nroff -man ./distribution/man/git-activity.1 # Show the actual man<span> page </span>being used after copying it <span>to</span> a known manpath location: [5012] λ &gt; man -wa git-activity /usr/local/share/man/man1/git-activity.1</code></pre>
+<h2> Conclusion
+</h2>
+<p>By following a couple of simple rules and by embracing the Unix model
+ of composing functionality out of small, focused programs and scripts, 
+it turns out that it is surprisingly easy to extend git's functionality 
+and making custom commands part of the git command suite.</p>
+<h2> More extensions
+</h2>
+<p>The source for <code>git-activity</code> and a few other commands can be found here: <a href="https://bitbucket.org/ssaasen/git-pastiche" data-event="clicked" data-uuid="d82bb0d7-60" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket"></a><a href="https://bitbucket.org/ssaasen/git-pastiche" data-event="clicked" data-uuid="d82bb0d7-60" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">https://bitbucket.org/ssaasen/git-pastiche</a></p>
+<p>Other additional git commands can be found here:</p>
+<ul> <li><a href="https://github.com/visionmedia/git-extras" data-event="clicked" data-uuid="136ac556-fc" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">https://github.com/visionmedia/git-extras</a></li> <li><a href="https://bitbucket.org/atlassian/git-client-debug" data-event="clicked" data-uuid="136ac556-fc" data-event-component="linkButton" data-event-container="richText" data-schema-version="1" data-product-key="bitbucket">https://bitbucket.org/atlassian/git-client-debug</a></li> </ul>
+
+</div>
+</div></div></div>
+    </div>
+
+    <div>
+      <div class="reader-message"></div>
+    </div>
+    <div aria-owns="toolbar"></div>
+  </div>
+
+
+
+</body></html>
