@@ -18,7 +18,18 @@ showSyntax() {
 
 
 show_qs() {
-  declare -F | grep "q_" | sed -e 's/declare -f q_//'
+  [ ! "$1" ] && list_qs || check_q $1
+}
+
+list_qs() {
+  printf "Defined Shortcuts:   (\"? SHORTCTUT\" for details)\n"
+  declare -F | grep "q_" | sed -e 's/declare -f q_/  - /'
+}
+
+check_q() {
+  [ ! "$1" ] &&  echo "Kein Shortcut angegben" && return
+  strTst=$(declare -f "q_$1" | tail -n +2)
+  [ "$strTst" ] && echo "$strTst" || echo "'$1' nicht vorhanden"
 }
 
 q_log1() {
@@ -30,13 +41,12 @@ q_logn() {
 }
 
 [ ! "$1" ] && exitShowSyntax
-[ "$1" = "?" ] && show_qs && exit
+[ "$1" = "?" ] && show_qs $2 && exit
 declare qargs=()
 declare strTst
 for arg in "$@"
   do
     strTst="$("q_$arg" 2>/dev/null)"
-    # if [ "$("q_$arg" 2>/dev/null)" ]
     if [ "$strTst" ]
       then
         qargs=( "${qargs[@]}" "$strTst" )
