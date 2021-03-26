@@ -113,7 +113,7 @@ for arg in "$@"
     if [ "$strTst" ]
       then
           # "#" at full start = error
-        [ "${strTst:1:1}" = "#" ] && exit
+        [ "${strTst:1:1}" = "#" ] && echo "$strTst" && exit
           # "#" at end = no action to pass, but possible message from inside
         [ "${strTst:(-1)}" != "#" ] && arrQArgs=( "${arrQArgs[@]}" "${strTst##\#}" ) || echo "${strTst#\#}" 
       else
