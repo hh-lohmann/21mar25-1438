@@ -86,8 +86,8 @@ q_del-branch() {
     # Action here
   git branch -d $1
     # NO action to pass over
-    #   - => ! Special echo to still allow shortcut existence check
-  echo "()"
+    #   - => ! "#" instead of nothing to still allow shortcut existence check
+  echo "#"
 }
 
 q_open-task() {
@@ -98,8 +98,13 @@ q_open-task() {
 
 [ ! "$1" ] && exitShowSyntax
 [ "$1" = "?" ] && show_qs $2 && exit
-declare qargs=()
+  # Resulting string to pass over to Git
+declare arrQArgs=()
+  # Possible arguments for shortcut call
 declare strCmdArgs
+  # Return (echo) of test shortcut call
+  #   - Will be reused for building arrQArgs
+  #     - ! shortcut function will not be called twice
 declare strTst
 for arg in "$@"
   do
@@ -109,22 +114,13 @@ for arg in "$@"
     strCmdArgs=''
     if [ "$strTst" ]
       then
-        qargs=( "${qargs[@]}" "$strTst" )
+          # Pass over if strTst is not "#" = "no action"
+        [ ! ${strTst:(-1)} = "#" ] && arrQArgs=( "${arrQArgs[@]}" "$strTst" )
       else
-        qargs=( "${qargs[@]}" "$arg" )
+        arrQArgs=( "${arrQArgs[@]}" "$arg" )
     fi
   done
 
-echo "--------------------------------------------------------------------------------"
-# echo "reading...: qgit $@"
-echo "qgit performing: git ${qargs[@]}"
-echo "--------------------------------------------------------------------------------"
-
-  # "###" signals exit_qError => exit if function is called via "$()"
-[ "${qargs[0]:4:3}" = "###" ] && exit
-  # Shortcut without action to pass to Git (signalled by "()" as echo)
-echo "schno: ${qargs[0]::2}" && exit
-[ "${qargs[0]}" = "()" ] && echo "guo" && exit
-# git ${qargs[@]}
+git ${arrQArgs[@]}
 
 #()
