@@ -58,20 +58,20 @@ q_logn() {
 
   # EXAMPLE + for testing
   #   - NO Action here + Action passing to Git
-  #   - compare q_add-branch, q_del-branch 
-q_show-branch() {
-  [ ! "$1" ] && exit_qError "show-branch: kein BRANCHNAME angegeben"
+  #   - compare q_branch-add, q_branch-del 
+q_branch-show() {
+  [ ! "$1" ] && exit_qError "branch-show: kein BRANCHNAME angegeben"
     # NO action here
   # ...nothing...
     # Action to pass over
-  echo "branch --list $1"
+  echo "branch --list $1 "
 }
 
   # EXAMPLE + for testing
   #   - Action here + Action passing to Git
-  #   - compare q_show-branch, q_del-branch 
-q_add-branch() {
-  [ ! "$1" ] && exit_qError "add-branch: kein BRANCHNAME angegeben"
+  #   - compare q_branch-show, q_branch-del 
+q_branch-add() {
+  [ ! "$1" ] && exit_qError "branch-add: kein BRANCHNAME angegeben"
     # Action here
   git branch $1
     # Action to pass over (here: check result)
@@ -80,9 +80,9 @@ q_add-branch() {
 
   # EXAMPLE + for testing
   #   - Action here + NO Action passing to Git
-  #   - compare q_show-branch, q_add-branch 
-q_del-branch() {
-  [ ! "$1" ] && exit_qError "del-branch: kein BRANCHNAME angegeben"
+  #   - compare q_branch-show, q_branch-add 
+q_branch-del() {
+  [ ! "$1" ] && exit_qError "branch-del: kein BRANCHNAME angegeben"
     # Action here
   git branch -d $1
     # NO action to pass over
