@@ -13,7 +13,7 @@ showSyntax() {
   printf "  - '?' lists all defined shortcuts \n"
   printf "  - QGIT-SHORTCUT is a defined shortcut\n"
   printf "    - If SHORTCUT has no arguments, than \"\"s are optional\n"
-  printf "    - ! Shortcuts can do actions on their own *or* just pass over options to Git\n"
+  printf "    - ! Shortcuts can do actions on their own *or* just pass options to Git\n"
   printf "      - In the second case additional options are possible\n"
   printf "        - ! qgit passes options arguments without any examination\n"
   printf "  - GIT-COMMAND is a Git command\n"
@@ -61,7 +61,7 @@ q_branch-show() {
   [ ! "$1" ] && exit_qError "branch-show: kein BRANCHNAME angegeben"
     # NO action here
   # ...nothing...
-    # Action to pass over
+    # Action to pass on
   echo "branch --list $1 "
 }
 
@@ -72,7 +72,7 @@ q_branch-add() {
   [ ! "$1" ] && exit_qError "branch-add: kein BRANCHNAME angegeben"
     # Action here
   git branch $1
-    # Action to pass over (here: check result)
+    # Action to pass on (here: check result)
   echo "branch"
 }
 
@@ -83,20 +83,27 @@ q_branch-del() {
   [ ! "$1" ] && exit_qError "branch-del: kein BRANCHNAME angegeben"
     # Action here
   git branch -d $1
-    # NO action to pass over
+    # NO action to pass on
     #   - => ! "#" instead of nothing to still allow shortcut existence check
   echo "#"
 }
 
 q_open-task() {
   [ ! "$1" ] && exit_qError "add-orphan: kein TITLE angegeben"
-  echo "hallo checkout --orphan ID $1"
+    # Actions here
+  git switch --orphan=$1
+    # "-r" for "rm" also accepted for files
+  iobacdi-tag.sh @10%
+  git add ".00_@10%"
+  git commit -m 'C @10%'
+    # Action to pass on
+  echo "#"
 
 }
 
 [ ! "$1" ] && exitShowSyntax
 [ "$1" = "?" ] && show_qs $2 && exit
-  # Resulting string to pass over to Git
+  # Resulting string to pass on to Git
 declare arrQArgs=()
   # Possible arguments for shortcut call
 declare strCmdArgs
