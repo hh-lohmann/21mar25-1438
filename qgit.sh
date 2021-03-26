@@ -56,14 +56,41 @@ q_logn() {
   echo "log --name-status"
 }
 
-  # Clearly for testing ...
-q_add-branch() {
-  [ ! "$1" ] && exit_qError "add-branch: kein BRANCHNAME angegeben"
-  echo "branch $1"
-
+  # EXAMPLE + for testing
+  #   - NO Action here + Action passing to Git
+  #   - compare q_add-branch, q_del-branch 
+q_show-branch() {
+  [ ! "$1" ] && exit_qError "show-branch: kein BRANCHNAME angegeben"
+    # NO action here
+  # ...nothing...
+    # Action to pass over
+  echo "branch --list $1"
 }
 
-q_add-orphan() {
+  # EXAMPLE + for testing
+  #   - Action here + Action passing to Git
+  #   - compare q_show-branch, q_del-branch 
+q_add-branch() {
+  [ ! "$1" ] && exit_qError "add-branch: kein BRANCHNAME angegeben"
+    # Action here
+  git branch $1
+    # Action to pass over (here: check result)
+  echo "branch"
+}
+
+  # EXAMPLE + for testing
+  #   - Action here + NO Action passing to Git
+  #   - compare q_show-branch, q_add-branch 
+q_del-branch() {
+  [ ! "$1" ] && exit_qError "del-branch: kein BRANCHNAME angegeben"
+    # Action here
+  git branch -d $1
+    # NO action to pass over
+    #   - => ! Special echo to still allow shortcut existence check
+  echo "()"
+}
+
+q_open-task() {
   [ ! "$1" ] && exit_qError "add-orphan: kein TITLE angegeben"
   echo "hallo checkout --orphan ID $1"
 
@@ -76,7 +103,6 @@ declare strCmdArgs
 declare strTst
 for arg in "$@"
   do
-    echo "x: $arg"
     strTst=${arg%% *}
     [ "$strTst" != "$arg" ] && strCmdArgs="${arg#* }" || strTst=$arg
     strTst="$("q_$strTst" "$strCmdArgs" 2>/dev/null)"
@@ -96,6 +122,9 @@ echo "--------------------------------------------------------------------------
 
   # "###" signals exit_qError => exit if function is called via "$()"
 [ "${qargs[0]:4:3}" = "###" ] && exit
-git ${qargs[@]}
+  # Shortcut without action to pass to Git (signalled by "()" as echo)
+echo "schno: ${qargs[0]::2}" && exit
+[ "${qargs[0]}" = "()" ] && echo "guo" && exit
+# git ${qargs[@]}
 
 #()
