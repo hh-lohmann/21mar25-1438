@@ -38,12 +38,10 @@ check_q() {
 }
 
 exit_qError() {
-  printf "\n"
   printf "################################################################################\n"
   printf "FEHLER:\n"
   printf "$1\n"
   printf "################################################################################\n"
-  printf "\n\n"
     # NB: "exit" effectless if function is called via "$()"
   exit
 }
@@ -114,13 +112,20 @@ for arg in "$@"
     strCmdArgs=''
     if [ "$strTst" ]
       then
-          # Pass over if strTst is not "#" = "no action"
-        [ ! ${strTst:(-1)} = "#" ] && arrQArgs=( "${arrQArgs[@]}" "$strTst" )
+          # "#" at full start = error
+        [ "${strTst:1:1}" = "#" ] && exit
+          # "#" at end = no action to pass, but possible message from inside
+        [ "${strTst:(-1)}" != "#" ] && arrQArgs=( "${arrQArgs[@]}" "${strTst##\#}" ) || echo "${strTst#\#}" 
       else
         arrQArgs=( "${arrQArgs[@]}" "$arg" )
     fi
   done
 
-git ${arrQArgs[@]}
+# echo "--------------------------------------------------------------------------------"
+# # echo "reading...: qgit $@"
+# echo "qgit performing: git ${qargs[@]}"
+# echo "--------------------------------------------------------------------------------"
+
+[ "$arrQArgs" != "" ] && git ${arrQArgs[@]}
 
 #()
