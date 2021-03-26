@@ -12,9 +12,10 @@ showSyntax() {
   printf "$(basename $0) ( '?' | ( ["] QGIT-SHORTCUT { SHORTCUT-ARGUMENTS } ["] | GIT-COMMAND ) { GIT-OPTION } )\n"
   printf "  - '?' lists all defined shortcuts \n"
   printf "  - QGIT-SHORTCUT is a defined shortcut\n"
-  printf "    - If SHORTCUT has no arguments, than \"\" is optional\n"
+  printf "    - If SHORTCUT has no arguments, than \"\"s are optional\n"
   printf "  - GIT-COMMAND is a Git command\n"
-  printf "  - GIT-OPTIONs are those as defined for Git commands\n"
+  printf "    - ! Only one Git command possible\n"
+  printf "  - GIT-OPTIONs are those as defined for the respective Git command\n"
 }
 
 
