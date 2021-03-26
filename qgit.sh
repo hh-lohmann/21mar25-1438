@@ -33,13 +33,14 @@ check_q() {
   [ "$strTst" ] && echo "$strTst" || echo "'$1' nicht vorhanden"
 }
 
-exit_q-error() {
+exit_qError() {
   printf "\n"
   printf "################################################################################\n"
   printf "FEHLER:\n"
   printf "$1\n"
   printf "################################################################################\n"
   printf "\n\n"
+    # NB: "exit" effectless if function is called via "$()"
   exit
 }
 
@@ -53,13 +54,13 @@ q_logn() {
 
   # Clearly for testing ...
 q_add-branch() {
-  [ ! "$1" ] && exit_q-error "add-branch: kein BRANCHNAME angegeben"
+  [ ! "$1" ] && exit_qError "add-branch: kein BRANCHNAME angegeben"
   echo "branch $1"
 
 }
 
 q_add-orphan() {
-  [ ! "$1" ] && exit_q-error "add-orphan: kein TITLE angegeben"
+  [ ! "$1" ] && exit_qError "add-orphan: kein TITLE angegeben"
   echo "hallo checkout --orphan ID $1"
 
 }
@@ -89,6 +90,8 @@ echo "--------------------------------------------------------------------------
 echo "qgit performing: git ${qargs[@]}"
 echo "--------------------------------------------------------------------------------"
 
+  # "###" signals exit_qError => exit if function is called via "$()"
+[ "${qargs[0]:4:3}" = "###" ] && exit
 git ${qargs[@]}
 
 #()
